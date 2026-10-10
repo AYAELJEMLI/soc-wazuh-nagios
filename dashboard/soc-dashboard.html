@@ -1,0 +1,618 @@
+
+<div style="display:flex;height:100vh;min-height:600px;font-family:var(--font-mono);background:#07100d;color:#c8ddd2;overflow:hidden">
+
+<style>
+.sb{width:200px;flex-shrink:0;background:#0b1812;border-right:1px solid rgba(255,255,255,0.07);display:flex;flex-direction:column;overflow-y:auto}
+.sb-brand{padding:16px 14px 10px;border-bottom:1px solid rgba(255,255,255,0.07)}
+.sb-brandname{font-size:11px;font-weight:600;letter-spacing:.08em;color:#c8ddd2}
+.sb-brandsub{font-size:9px;color:#3d6050;letter-spacing:.06em;margin-top:2px}
+.sb-sec{padding:12px 0 4px}
+.sb-seclbl{font-size:8px;font-weight:600;letter-spacing:1.4px;text-transform:uppercase;color:#2a4035;padding:0 14px 6px}
+.nav-btn{width:100%;display:flex;align-items:center;gap:8px;padding:7px 14px;background:none;border:none;border-left:2px solid transparent;color:#4d7060;font-family:var(--font-mono);font-size:11px;text-align:left;cursor:pointer;transition:all .15s}
+.nav-btn:hover{background:rgba(0,180,100,.05);color:#8ab8a0}
+.nav-btn.active{background:rgba(0,180,100,.09);border-left-color:#00c87a;color:#00c87a}
+.nav-btn svg{width:13px;height:13px;flex-shrink:0;stroke:currentColor;fill:none;stroke-width:1.8}
+.nbadge{margin-left:auto;font-size:8px;padding:1px 5px;border-radius:2px}
+.nbadge.g{background:rgba(0,200,120,.12);color:#00c87a}
+.nbadge.r{background:rgba(220,60,60,.12);color:#e05252}
+.nbadge.a{background:rgba(220,160,30,.12);color:#d4a017}
+.sb-foot{padding:10px 14px;margin-top:auto;border-top:1px solid rgba(255,255,255,.06);font-size:9px;color:#2a4035;line-height:1.8}
+.topbar{height:40px;background:#0b1812;border-bottom:1px solid rgba(255,255,255,.07);display:flex;align-items:center;padding:0 16px;gap:10px;flex-shrink:0}
+.pill{display:flex;align-items:center;gap:5px;padding:2px 8px;border:1px solid rgba(255,255,255,.08);border-radius:2px;font-size:9px}
+.pill-l{color:#2a4035}
+.pill-v{font-weight:500}
+.pill-v.ok{color:#00c87a}
+.pill-v.wr{color:#d4a017}
+.dot{width:5px;height:5px;border-radius:50%;background:#00c87a;animation:bp 2.2s ease infinite}
+@keyframes bp{0%,100%{opacity:1}50%{opacity:.3}}
+.page{display:none;padding:20px;overflow-y:auto;flex:1}
+.page.active{display:block}
+.ptitle{font-size:15px;font-weight:600;color:#e0ece6;letter-spacing:-.01em;margin-bottom:2px}
+.psub{font-size:9.5px;color:#3d6050;margin-bottom:18px}
+.slbl{font-size:8px;font-weight:600;letter-spacing:1.3px;text-transform:uppercase;color:#3d6050;display:flex;align-items:center;gap:8px;margin:16px 0 10px}
+.slbl::after{content:'';flex:1;height:1px;background:rgba(255,255,255,.06)}
+.kg{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:1px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.07);border-radius:3px;overflow:hidden;margin-bottom:16px}
+.kpi{background:#0b1812;padding:13px 14px;position:relative}
+.kpi::after{content:'';position:absolute;top:0;left:0;right:0;height:1.5px}
+.kpi.ok::after{background:#00c87a}
+.kpi.er::after{background:#e05252}
+.kpi.wr::after{background:#d4a017}
+.kpi.in::after{background:#4a9eff}
+.kpi.nt::after{background:#1d3028}
+.kl{font-size:9px;color:#3d6050;font-weight:500;text-transform:uppercase;letter-spacing:.4px;margin-bottom:7px}
+.kv{font-size:21px;font-weight:500;line-height:1;margin-bottom:3px}
+.kv.ok{color:#00c87a}.kv.er{color:#e05252}.kv.wr{color:#d4a017}.kv.in{color:#4a9eff}.kv.nt{color:#c8ddd2}
+.ks{font-size:9px;color:#3d6050}
+.tw{border:1px solid rgba(255,255,255,.07);border-radius:3px;overflow:hidden;margin-bottom:16px}
+.th{background:#0e1e18;padding:8px 14px;border-bottom:1px solid rgba(255,255,255,.06);display:flex;align-items:center;justify-content:space-between}
+.tht{font-size:9.5px;font-weight:600;color:#6a9080;letter-spacing:.03em}
+.tbtn{font-size:9px;padding:3px 8px;border:1px solid rgba(255,255,255,.09);border-radius:2px;background:none;color:#3d6050;cursor:pointer;font-family:var(--font-mono);transition:all .15s}
+.tbtn:hover{border-color:#00c87a;color:#00c87a}
+table{width:100%;border-collapse:collapse}
+th{background:#0e1e18;font-size:8px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:#2a4035;padding:7px 12px;text-align:left;border-bottom:1px solid rgba(255,255,255,.06)}
+td{padding:8px 12px;border-bottom:1px solid rgba(255,255,255,.05);font-size:11px;color:#7a9890;vertical-align:middle}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:rgba(255,255,255,.015)}
+.mn{font-family:var(--font-mono);font-size:10px}
+.hi{color:#c8ddd2;font-weight:500}
+.bdg{display:inline-flex;align-items:center;gap:3px;padding:2px 6px;border-radius:2px;font-size:9px;font-weight:600;font-family:var(--font-mono)}
+.bdg::before{content:'';width:4px;height:4px;border-radius:50%;flex-shrink:0}
+.bdg.ok{background:rgba(0,200,120,.1);color:#00c87a}.bdg.ok::before{background:#00c87a}
+.bdg.er{background:rgba(220,80,80,.1);color:#e05252}.bdg.er::before{background:#e05252}
+.bdg.wr{background:rgba(212,160,23,.1);color:#d4a017}.bdg.wr::before{background:#d4a017}
+.bdg.in{background:rgba(74,158,255,.1);color:#4a9eff}.bdg.in::before{background:#4a9eff}
+.bdg.nt{background:rgba(255,255,255,.06);color:#6a9080}.bdg.nt::before{background:#3d6050}
+.btn{display:inline-flex;align-items:center;gap:5px;padding:6px 12px;border-radius:2px;font-family:var(--font-mono);font-size:10.5px;font-weight:500;cursor:pointer;border:1px solid;transition:all .15s}
+.btn-p{background:#00c87a;border-color:#00c87a;color:#07100d}
+.btn-p:hover{background:#00e68a}
+.btn-g{background:none;border-color:rgba(255,255,255,.1);color:#6a9080}
+.btn-g:hover{border-color:#00c87a;color:#00c87a}
+.fd{border:1px solid rgba(255,255,255,.07);border-radius:3px;overflow:hidden;margin-bottom:16px}
+.fi{display:flex;align-items:flex-start;gap:9px;padding:9px 12px;background:#0b1812;border-bottom:1px solid rgba(255,255,255,.05);border-left:2px solid transparent;transition:background .1s}
+.fi:last-child{border-bottom:none}
+.fi:hover{background:#0e1e18}
+.fi.er{border-left-color:#e05252}.fi.wr{border-left-color:#d4a017}.fi.in{border-left-color:#4a9eff}.fi.ok{border-left-color:#00c87a}
+.fd-dot{width:5px;height:5px;border-radius:50%;flex-shrink:0;margin-top:5px}
+.fi.er .fd-dot{background:#e05252}.fi.wr .fd-dot{background:#d4a017}.fi.in .fd-dot{background:#4a9eff}.fi.ok .fd-dot{background:#00c87a}
+.fb{flex:1;min-width:0}
+.ft{font-size:11px;font-weight:500;color:#c8ddd2;margin-bottom:2px}
+.fm{font-size:9px;color:#3d6050;font-family:var(--font-mono)}
+.ftime{font-size:9px;color:#2a4035;font-family:var(--font-mono);flex-shrink:0;white-space:nowrap}
+.mr-blk{border:1px solid rgba(255,255,255,.07);border-radius:3px;overflow:hidden;margin-bottom:12px}
+.mr-hdr{background:#0e1e18;padding:7px 12px;border-bottom:1px solid rgba(255,255,255,.06);font-size:9.5px;font-weight:600;color:#6a9080}
+.mr-row{display:grid;grid-template-columns:150px 1fr 55px;align-items:center;gap:10px;padding:7px 12px;border-bottom:1px solid rgba(255,255,255,.05);background:#0b1812}
+.mr-row:last-child{border-bottom:none}
+.mr-row:hover{background:#0e1e18}
+.mr-n{font-size:11px;color:#7a9890}
+.mr-v{font-family:var(--font-mono);font-size:10px;text-align:right}
+.mr-v.ok{color:#00c87a}.mr-v.wr{color:#d4a017}.mr-v.er{color:#e05252}.mr-v.nt{color:#c8ddd2}
+.btr{height:2px;background:#1d3028;border-radius:1px}
+.bf{height:2px;border-radius:1px}
+.bf.ok{background:#00c87a}.bf.wr{background:#d4a017}.bf.er{background:#e05252}
+.tc{background:#0b1812;border:1px solid rgba(255,255,255,.07);border-radius:3px;padding:16px;cursor:pointer;transition:border-color .2s,background .2s;margin-bottom:10px}
+.tc:hover{border-color:rgba(0,200,120,.25);background:#0e1e18}
+.tc-top{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:8px}
+.tc-n{font-size:13px;font-weight:600;color:#e0ece6}
+.tc-v{font-size:9px;color:#3d6050;font-family:var(--font-mono);margin-top:2px}
+.tc-arr{font-size:13px;color:#3d6050;transition:transform .18s,color .18s}
+.tc:hover .tc-arr{transform:translateX(3px);color:#00c87a}
+.tc-url{font-family:var(--font-mono);font-size:9px;color:#4a9eff;padding:2px 6px;background:rgba(74,158,255,.08);border-radius:2px;display:inline-block;margin-bottom:8px}
+.tc-d{font-size:11px;color:#3d6050;line-height:1.6;margin-bottom:10px}
+.tc-st{display:flex;gap:14px;padding-top:9px;border-top:1px solid rgba(255,255,255,.06)}
+.tc-s{font-size:9.5px;color:#2a4035}
+.tc-s strong{color:#8ab8a0;font-weight:600}
+.topo{background:#0b1812;border:1px solid rgba(255,255,255,.07);border-radius:3px;padding:16px;position:relative;min-height:240px;overflow:hidden;margin-bottom:16px}
+.topo svg{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.tn{position:absolute;transform:translate(-50%,-50%);display:flex;flex-direction:column;align-items:center;gap:3px;cursor:default}
+.tb{width:38px;height:38px;border:1px solid;border-radius:3px;display:flex;align-items:center;justify-content:center;font-family:var(--font-mono);font-size:8px;font-weight:600;letter-spacing:.5px}
+.tb.ok{border-color:#00c87a;background:rgba(0,200,120,.07);color:#00c87a}
+.tb.er{border-color:#e05252;background:rgba(220,80,80,.07);color:#e05252}
+.tb.in{border-color:#4a9eff;background:rgba(74,158,255,.07);color:#4a9eff}
+.tl{font-size:8.5px;color:#6a9080;text-align:center;max-width:68px;font-weight:500}
+.tip{font-size:7.5px;color:#2a4035;font-family:var(--font-mono)}
+.mg{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:1px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.07);border-radius:3px;overflow:hidden;margin-bottom:16px}
+.mc{background:#0b1812;padding:13px;border-left:2px solid #1d3028;transition:background .12s}
+.mc:hover{background:#0e1e18}
+.mc.hr{border-left-color:#e05252}.mc.ha{border-left-color:#d4a017}.mc.hg{border-left-color:#00c87a}
+.mi{font-family:var(--font-mono);font-size:9px;color:#4a9eff;margin-bottom:3px}
+.mn2{font-size:11px;font-weight:500;color:#c8ddd2;margin-bottom:2px}
+.mt{font-size:9.5px;color:#2a4035;margin-bottom:7px}
+.mv{font-family:var(--font-mono);font-size:19px;font-weight:500;color:#c8ddd2;margin-bottom:1px}
+.ms{font-size:9px;color:#2a4035}
+.form-r{margin-bottom:11px}
+.form-l{font-size:8px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:#2a4035;margin-bottom:4px;display:block}
+.fi2{width:100%;padding:6px 9px;background:#0e1e18;border:1px solid rgba(255,255,255,.1);border-radius:2px;color:#c8ddd2;font-family:var(--font-mono);font-size:11px;outline:none;box-sizing:border-box}
+.fi2:focus{border-color:#00c87a}
+.sel{width:100%;padding:6px 9px;background:#0e1e18;border:1px solid rgba(255,255,255,.1);border-radius:2px;color:#c8ddd2;font-family:var(--font-mono);font-size:11px;outline:none;-webkit-appearance:none;box-sizing:border-box}
+.tg-r{display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.05)}
+.tg-r:last-child{border-bottom:none}
+.tg-i{font-size:11px;color:#8ab8a0}
+.tg-s{font-size:9px;color:#2a4035;margin-top:1px}
+.sw{position:relative;width:28px;height:15px;flex-shrink:0}
+.sw input{opacity:0;width:0;height:0}
+.swt{position:absolute;inset:0;background:#1d3028;border:1px solid rgba(255,255,255,.08);border-radius:8px;cursor:pointer;transition:.15s}
+.swt::before{content:'';position:absolute;width:9px;height:9px;left:2px;top:2px;background:#3d6050;border-radius:50%;transition:.15s}
+.sw input:checked+.swt{background:rgba(0,200,120,.18);border-color:#00c87a}
+.sw input:checked+.swt::before{transform:translateX(13px);background:#00c87a}
+.code{background:#070e0b;border:1px solid rgba(255,255,255,.07);border-radius:3px;padding:9px 11px;font-family:var(--font-mono);font-size:9.5px;color:#00c87a;line-height:1.8;margin:7px 0;overflow-x:auto;white-space:pre}
+.cc{color:#2a4035}
+.ib{padding:8px 11px;border-radius:2px;font-size:10.5px;line-height:1.6;margin-bottom:11px}
+.ib.g{background:rgba(0,200,120,.07);border:1px solid rgba(0,200,120,.15);color:#6a9080}
+.ib.b{background:rgba(74,158,255,.07);border:1px solid rgba(74,158,255,.15);color:#6a9080}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.card{background:#0b1812;border:1px solid rgba(255,255,255,.07);border-radius:3px;padding:16px}
+.card-t{font-size:11px;font-weight:600;color:#c8ddd2;margin-bottom:11px;padding-bottom:8px;border-bottom:1px solid rgba(255,255,255,.06)}
+.toast{position:fixed;bottom:14px;right:14px;background:#0e1e18;border:1px solid #00c87a;border-radius:3px;padding:8px 13px;font-size:10px;color:#c8ddd2;z-index:999;font-family:var(--font-mono);transform:translateY(40px);opacity:0;transition:all .2s;pointer-events:none}
+.toast.show{transform:translateY(0);opacity:1}
+@media(max-width:600px){.sb{display:none}.two{grid-template-columns:1fr}.kg{grid-template-columns:repeat(2,1fr)}}
+</style>
+
+<div style="display:flex;flex-direction:column;height:100vh">
+
+<div class="topbar">
+  <div style="display:flex;align-items:center;gap:8px;margin-right:auto">
+    <div style="width:22px;height:22px;border:1px solid #00c87a;border-radius:2px;display:flex;align-items:center;justify-content:center">
+      <svg width="12" height="12" viewBox="0 0 16 16" fill="#00c87a"><path d="M8 1L2 4v5c0 3.3 2.5 6.1 6 7 3.5-.9 6-3.7 6-7V4L8 1z"/></svg>
+    </div>
+    <div>
+      <div style="font-size:11px;font-weight:600;color:#c8ddd2;letter-spacing:.04em">SOC PLATFORM</div>
+      <div style="font-size:8px;color:#2a4035;letter-spacing:.06em">EMSI · 4CIRM · 2025/2026</div>
+    </div>
+  </div>
+  <div class="pill"><span class="dot"></span><span class="pill-l">WAZUH</span><span class="pill-v ok">ONLINE</span></div>
+  <div class="pill"><span class="dot"></span><span class="pill-l">NAGIOS</span><span class="pill-v ok">ONLINE</span></div>
+  <div class="pill"><span class="pill-l">ALERTES</span><span class="pill-v wr">8 922</span></div>
+  <div class="pill"><span class="pill-l">HOSTS</span><span class="pill-v ok">5/5</span></div>
+  <div id="clk" style="font-size:9.5px;color:#2a4035;font-family:var(--font-mono)">--:--:--</div>
+</div>
+
+<div style="display:flex;flex:1;overflow:hidden">
+
+<nav class="sb">
+  <div class="sb-brand">
+    <div class="sb-brandname">SOC CENTER</div>
+    <div class="sb-brandsub">EMSI · 4CIRM · 2025/2026</div>
+  </div>
+  <div class="sb-sec">
+    <div class="sb-seclbl">Navigation</div>
+    <button class="nav-btn active" onclick="go('overview',this)">
+      <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+      Vue d'ensemble
+    </button>
+    <button class="nav-btn" onclick="go('wazuh',this)">
+      <svg viewBox="0 0 24 24"><path d="M12 2L3 7l9 5 9-5-9-5zM3 17l9 5 9-5M3 12l9 5 9-5"/></svg>
+      Wazuh SIEM
+      <span class="nbadge a">477</span>
+    </button>
+    <button class="nav-btn" onclick="go('nagios',this)">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+      Nagios Core
+      <span class="nbadge r">1 CRIT</span>
+    </button>
+    <button class="nav-btn" onclick="go('metrics',this)">
+      <svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+      Métriques système
+    </button>
+    <button class="nav-btn" onclick="go('mitre',this)">
+      <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+      MITRE ATT&amp;CK
+      <span class="nbadge a">7</span>
+    </button>
+    <button class="nav-btn" onclick="go('alerts',this)">
+      <svg viewBox="0 0 24 24"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg>
+      Alertes & Incidents
+    </button>
+    <button class="nav-btn" onclick="go('notif',this)">
+      <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 012.12 4.18 2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+      Notifications
+    </button>
+    <button class="nav-btn" onclick="go('mobile',this)">
+      <svg viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
+      Accès mobile
+    </button>
+  </div>
+  <div class="sb-foot">
+    Wazuh · 10.0.0.10<br>
+    Nagios · 10.0.0.20<br>
+    Tailscale VPN · v1.96.4
+  </div>
+</nav>
+
+<div style="flex:1;overflow-y:auto;background:#07100d">
+
+<div id="p-overview" class="page active">
+  <div class="ptitle">Centre Opérationnel de Sécurité</div>
+  <div class="psub">Wazuh 4.7 · Nagios 4.4.14 · Tailscale VPN · Ubuntu 22.04 LTS</div>
+
+  <div class="slbl">indicateurs clés</div>
+  <div class="kg">
+    <div class="kpi ok"><div class="kl">Hôtes UP</div><div class="kv ok">5/5</div><div class="ks">0 DOWN · 0 UNREACHABLE</div></div>
+    <div class="kpi ok"><div class="kl">Agents Wazuh</div><div class="kv ok">2</div><div class="ks">Actifs · 0 déconnectés</div></div>
+    <div class="kpi wr"><div class="kl">Alertes 24h</div><div class="kv wr">8 922</div><div class="ks">477 Medium · 0 Critical</div></div>
+    <div class="kpi er"><div class="kl">Auth failures</div><div class="kv er">1 932</div><div class="ks">Brute force SSH</div></div>
+    <div class="kpi in"><div class="kl">Techniques MITRE</div><div class="kv in">7</div><div class="ks">6 tactiques couvertes</div></div>
+    <div class="kpi nt"><div class="kl">Services OK</div><div class="kv nt">12/13</div><div class="ks">1 CRITICAL SSH</div></div>
+  </div>
+
+  <div class="slbl">accès direct</div>
+  <div class="tc" onclick="openUrl('https://10.0.0.10')">
+    <div class="tc-top">
+      <div><div class="tc-n">Wazuh SIEM Dashboard</div><div class="tc-v">v4.7.x · OpenSearch 2.x · Ubuntu 22.04</div></div>
+      <div style="display:flex;align-items:center;gap:8px"><span class="bdg ok">ONLINE</span><span class="tc-arr">→</span></div>
+    </div>
+    <div class="tc-url">https://10.0.0.10</div>
+    <div class="tc-d">Détection temps réel · corrélation MITRE ATT&amp;CK · Active Response · forensics</div>
+    <div class="tc-st">
+      <div class="tc-s">Alertes 24h <strong>8 922</strong></div>
+      <div class="tc-s">Auth failures <strong>1 932</strong></div>
+      <div class="tc-s">Agents <strong>2 actifs</strong></div>
+    </div>
+  </div>
+  <div class="tc" onclick="openUrl('http://10.0.0.20/nagios')">
+    <div class="tc-top">
+      <div><div class="tc-n">Nagios Core</div><div class="tc-v">v4.4.14 · NRPE 4.x · Plugins 2.4.6</div></div>
+      <div style="display:flex;align-items:center;gap:8px"><span class="bdg ok">ONLINE</span><span class="tc-arr">→</span></div>
+    </div>
+    <div class="tc-url">http://10.0.0.20/nagios</div>
+    <div class="tc-d">Supervision hôtes · services critiques · CPU/RAM/Disque via NRPE · latences</div>
+    <div class="tc-st">
+      <div class="tc-s">Hôtes UP <strong>5/5</strong></div>
+      <div class="tc-s">Services <strong>12/13 OK</strong></div>
+      <div class="tc-s">Latence moy. <strong>52ms</strong></div>
+    </div>
+  </div>
+
+  <div class="slbl">topologie réseau tailscale</div>
+  <div class="topo">
+    <svg viewBox="0 0 100 100" preserveAspectRatio="none">
+      <line x1="50" y1="50" x2="22" y2="18" stroke="rgba(0,200,120,.18)" stroke-width=".5" stroke-dasharray="2,2"/>
+      <line x1="50" y1="50" x2="78" y2="18" stroke="rgba(74,158,255,.18)" stroke-width=".5" stroke-dasharray="2,2"/>
+      <line x1="50" y1="50" x2="8" y2="78" stroke="rgba(0,200,120,.18)" stroke-width=".5" stroke-dasharray="2,2"/>
+      <line x1="50" y1="50" x2="92" y2="78" stroke="rgba(0,200,120,.18)" stroke-width=".5" stroke-dasharray="2,2"/>
+      <line x1="50" y1="50" x2="50" y2="90" stroke="rgba(220,80,80,.18)" stroke-width=".5" stroke-dasharray="2,2"/>
+    </svg>
+    <div class="tn" style="left:50%;top:50%"><div class="tb in">VPN</div><div class="tl">Tailscale</div></div>
+    <div class="tn" style="left:20%;top:14%"><div class="tb ok">WAZUH</div><div class="tl">Wazuh Manager</div><div class="tip">10.0.0.10</div></div>
+    <div class="tn" style="right:6%;top:14%"><div class="tb ok">NGS</div><div class="tl">Nagios Server</div><div class="tip">10.0.0.20</div></div>
+    <div class="tn" style="left:5%;bottom:8%"><div class="tb ok">AGT</div><div class="tl">Ubuntu Agent</div><div class="tip">10.0.0.30</div></div>
+    <div class="tn" style="right:3%;bottom:8%"><div class="tb ok">WIN</div><div class="tl">Windows Khadija</div><div class="tip">10.0.0.40</div></div>
+    <div class="tn" style="left:50%;bottom:2%"><div class="tb er">KALI</div><div class="tl">Kali Attaquant</div><div class="tip">10.0.0.50</div></div>
+  </div>
+</div>
+
+<div id="p-wazuh" class="page">
+  <div style="display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:16px">
+    <div><div class="ptitle">Wazuh SIEM</div><div class="psub">https://10.0.0.10 · OpenSearch 2.x · Port 443</div></div>
+    <div style="display:flex;gap:8px"><button class="btn btn-g" onclick="toast('Actualisation...')">↺ Actualiser</button><button class="btn btn-p" onclick="openUrl('https://10.0.0.10')">Ouvrir Wazuh →</button></div>
+  </div>
+  <div class="kg">
+    <div class="kpi nt"><div class="kl">Total alertes</div><div class="kv nt">8 922</div><div class="ks">toutes sévérités</div></div>
+    <div class="kpi ok"><div class="kl">Critical (≥15)</div><div class="kv ok">0</div><div class="ks">aucun incident majeur</div></div>
+    <div class="kpi wr"><div class="kl">Medium (7–11)</div><div class="kv wr">477</div><div class="ks">analyse L2 requise</div></div>
+    <div class="kpi ok"><div class="kl">Low (0–6)</div><div class="kv ok">8 444</div><div class="ks">informatif</div></div>
+    <div class="kpi er"><div class="kl">Auth failures</div><div class="kv er">1 932</div><div class="ks">brute force SSH</div></div>
+    <div class="kpi in"><div class="kl">Auth success</div><div class="kv in">248</div><div class="ks">connexions légitimes</div></div>
+  </div>
+  <div class="slbl">agents connectés</div>
+  <div class="tw">
+    <div class="th"><span class="tht">Agents Wazuh actifs</span><button class="tbtn" onclick="openUrl('https://10.0.0.10')">Voir dans Wazuh</button></div>
+    <table><thead><tr><th>Nom</th><th>OS</th><th>IP Tailscale</th><th>Version</th><th>Statut</th></tr></thead>
+    <tbody>
+      <tr><td class="mn hi">ubuntu-agent</td><td class="mn">Ubuntu 22.04.5 LTS</td><td class="mn">10.0.0.30</td><td class="mn">v4.14.4</td><td><span class="bdg ok">Actif</span></td></tr>
+      <tr><td class="mn hi">Windows11-Khadija</td><td class="mn">Windows 11 Pro 23H2</td><td class="mn">10.0.0.40</td><td class="mn">v4.9.2</td><td><span class="bdg ok">Actif</span></td></tr>
+    </tbody></table>
+  </div>
+  <div class="slbl">dernières alertes</div>
+  <div class="fd">
+    <div class="fi er"><div class="fd-dot"></div><div class="fb"><div class="ft">SSH brute force detected — rule 100001 · Level 10</div><div class="fm">ubuntu-agent · T1110.001 · Credential Access</div></div><div class="ftime" id="ft1">--:--</div></div>
+    <div class="fi wr"><div class="fd-dot"></div><div class="fb"><div class="ft">New user added to the system — hackertest · rule 5902</div><div class="fm">ubuntu-agent · Level 8 · T1136 · Persistence</div></div><div class="ftime">23:55:21</div></div>
+    <div class="fi wr"><div class="fd-dot"></div><div class="fb"><div class="ft">Successful sudo to ROOT executed · rule 5402</div><div class="fm">ubuntu-agent · Level 3 · T1548.003 · Privilege Escalation</div></div><div class="ftime">23:55:20</div></div>
+    <div class="fi in"><div class="fd-dot"></div><div class="fb"><div class="ft">Integrity checksum changed — /etc/passwd (chmod 777)</div><div class="fm">ubuntu-agent · Level 7 · T1565.001 · Impact · FIM</div></div><div class="ftime">23:55:20</div></div>
+    <div class="fi ok"><div class="fd-dot"></div><div class="fb"><div class="ft">Windows Logon Success — Khadija-Sekkat · rule 60106</div><div class="fm">Windows11-Khadija · Level 3 · T1078 · Defense Evasion</div></div><div class="ftime">00:01:52</div></div>
+  </div>
+</div>
+
+<div id="p-nagios" class="page">
+  <div style="display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:16px">
+    <div><div class="ptitle">Nagios Core — Supervision Infrastructure</div><div class="psub">http://10.0.0.20/nagios · Nagios 4.4.14 · NRPE 4.x</div></div>
+    <div style="display:flex;gap:8px"><button class="btn btn-g" onclick="toast('Actualisation...')">↺ Actualiser</button><button class="btn btn-p" onclick="openUrl('http://10.0.0.20/nagios')">Ouvrir Nagios →</button></div>
+  </div>
+  <div class="kg">
+    <div class="kpi ok"><div class="kl">Hôtes UP</div><div class="kv ok">5</div><div class="ks">0 DOWN · 0 UNREACHABLE</div></div>
+    <div class="kpi ok"><div class="kl">Services OK</div><div class="kv ok">12</div><div class="ks">sur 13 supervisés</div></div>
+    <div class="kpi er"><div class="kl">Services CRITICAL</div><div class="kv er">1</div><div class="ks">SSH localhost refusé</div></div>
+    <div class="kpi nt"><div class="kl">Latence moyenne</div><div class="kv nt">52ms</div><div class="ks">réseau Tailscale WireGuard</div></div>
+  </div>
+  <div class="slbl">état des hôtes</div>
+  <div class="tw">
+    <div class="th"><span class="tht">Host Status Details — 5 hôtes</span><button class="tbtn" onclick="openUrl('http://10.0.0.20/nagios')">Voir dans Nagios</button></div>
+    <table><thead><tr><th>Hôte</th><th>Rôle</th><th>IP Tailscale</th><th>Statut</th><th>Latence</th></tr></thead>
+    <tbody>
+      <tr><td class="mn hi">kali-attaquant</td><td>Machine attaquante</td><td class="mn">10.0.0.50</td><td><span class="bdg ok">UP</span></td><td class="mn" style="color:#00c87a">2.21 ms</td></tr>
+      <tr><td class="mn hi">localhost</td><td>Nagios Server</td><td class="mn">10.0.0.20</td><td><span class="bdg ok">UP</span></td><td class="mn" style="color:#00c87a">0.06 ms</td></tr>
+      <tr><td class="mn hi">ubuntu-agent</td><td>Cible Linux</td><td class="mn">10.0.0.30</td><td><span class="bdg ok">UP</span></td><td class="mn" style="color:#00c87a">48.62 ms</td></tr>
+      <tr><td class="mn hi">wazuh-manager</td><td>SIEM Manager</td><td class="mn">10.0.0.10</td><td><span class="bdg ok">UP</span></td><td class="mn" style="color:#d4a017">59.40 ms</td></tr>
+      <tr><td class="mn hi">windows-khadija</td><td>Cible Windows</td><td class="mn">10.0.0.40</td><td><span class="bdg ok">UP</span></td><td class="mn" style="color:#00c87a">18.10 ms</td></tr>
+    </tbody></table>
+  </div>
+  <div class="slbl">services supervisés</div>
+  <div class="tw">
+    <table><thead><tr><th>Hôte</th><th>Service</th><th>Port</th><th>Statut</th><th>Détail</th></tr></thead>
+    <tbody>
+      <tr><td class="mn">wazuh-manager</td><td>Wazuh Manager</td><td class="mn">TCP 1514</td><td><span class="bdg ok">OK</span></td><td class="mn" style="font-size:9px;color:#2a4035">TCP OK · port ouvert</td></tr>
+      <tr><td class="mn">wazuh-manager</td><td>Wazuh API REST</td><td class="mn">TCP 55000</td><td><span class="bdg ok">OK</span></td><td class="mn" style="font-size:9px;color:#2a4035">API opérationnelle</td></tr>
+      <tr><td class="mn">wazuh-manager</td><td>OpenSearch Indexer</td><td class="mn">TCP 9200</td><td><span class="bdg ok">OK</span></td><td class="mn" style="font-size:9px;color:#2a4035">cluster healthy</td></tr>
+      <tr><td class="mn">localhost</td><td>HTTP Apache</td><td class="mn">TCP 80</td><td><span class="bdg ok">OK</span></td><td class="mn" style="font-size:9px;color:#2a4035">HTTP 200 · 0.002s</td></tr>
+      <tr><td class="mn">localhost</td><td>SSH</td><td class="mn">TCP 22</td><td><span class="bdg er">CRITICAL</span></td><td class="mn" style="font-size:9px;color:#e05252">Connection refused</td></tr>
+      <tr><td class="mn">localhost</td><td>Current Load</td><td class="mn">NRPE</td><td><span class="bdg ok">OK</span></td><td class="mn" style="font-size:9px;color:#2a4035">0.00, 0.00, 0.00</td></tr>
+      <tr><td class="mn">localhost</td><td>Root Partition</td><td class="mn">NRPE</td><td><span class="bdg ok">OK</span></td><td class="mn" style="font-size:9px;color:#2a4035">5 602 MiB libres · 30%</td></tr>
+      <tr><td class="mn">localhost</td><td>Swap Usage</td><td class="mn">NRPE</td><td><span class="bdg ok">OK</span></td><td class="mn" style="font-size:9px;color:#2a4035">96% libre · 2 042 MB</td></tr>
+      <tr><td class="mn">ubuntu-agent</td><td>PING</td><td class="mn">ICMP</td><td><span class="bdg ok">OK</span></td><td class="mn" style="font-size:9px;color:#2a4035">0% perte · 39.32ms</td></tr>
+      <tr><td class="mn">windows-khadija</td><td>PING</td><td class="mn">ICMP</td><td><span class="bdg ok">OK</span></td><td class="mn" style="font-size:9px;color:#2a4035">0% perte · 79.03ms</td></tr>
+    </tbody></table>
+  </div>
+</div>
+
+<div id="p-metrics" class="page">
+  <div class="ptitle">Métriques système — Infrastructure SOC</div>
+  <div class="psub">CPU · RAM · Disque · Swap · Processus · Services — collecte via NRPE 4.x</div>
+
+  <div class="slbl">vm1 — wazuh manager + indexer (ubuntu 22.04 · 7.5 go ram · intel i5)</div>
+  <div class="two">
+    <div>
+      <div class="mr-blk">
+        <div class="mr-hdr">Charge CPU</div>
+        <div class="mr-row"><span class="mr-n">Load 1 min</span><div class="btr"><div class="bf ok" style="width:12%"></div></div><span class="mr-v ok">12%</span></div>
+        <div class="mr-row"><span class="mr-n">Load 5 min</span><div class="btr"><div class="bf ok" style="width:9%"></div></div><span class="mr-v ok">9%</span></div>
+        <div class="mr-row"><span class="mr-n">Load 15 min</span><div class="btr"><div class="bf ok" style="width:7%"></div></div><span class="mr-v ok">7%</span></div>
+        <div class="mr-row"><span class="mr-n">vCPU</span><div class="btr"></div><span class="mr-v nt">2 cœurs</span></div>
+      </div>
+      <div class="mr-blk">
+        <div class="mr-hdr">Mémoire RAM</div>
+        <div class="mr-row"><span class="mr-n">RAM utilisée</span><div class="btr"><div class="bf wr" style="width:68%"></div></div><span class="mr-v wr">68%</span></div>
+        <div class="mr-row"><span class="mr-n">RAM libre</span><div class="btr"><div class="bf ok" style="width:32%"></div></div><span class="mr-v ok">2.4 Go</span></div>
+        <div class="mr-row"><span class="mr-n">Swap utilisé</span><div class="btr"><div class="bf ok" style="width:4%"></div></div><span class="mr-v ok">4%</span></div>
+        <div class="mr-row"><span class="mr-n">Total RAM</span><div class="btr"></div><span class="mr-v nt">7.5 Go</span></div>
+      </div>
+    </div>
+    <div>
+      <div class="mr-blk">
+        <div class="mr-hdr">Espace disque</div>
+        <div class="mr-row"><span class="mr-n">/ (root) utilisé</span><div class="btr"><div class="bf ok" style="width:38%"></div></div><span class="mr-v ok">38%</span></div>
+        <div class="mr-row"><span class="mr-n">Disponible</span><div class="btr"></div><span class="mr-v ok">31.4 Go</span></div>
+        <div class="mr-row"><span class="mr-n">Total</span><div class="btr"></div><span class="mr-v nt">50.6 Go</span></div>
+        <div class="mr-row"><span class="mr-n">Filesystem</span><div class="btr"></div><span class="mr-v nt">ext4</span></div>
+      </div>
+      <div class="mr-blk">
+        <div class="mr-hdr">Services Wazuh</div>
+        <div class="mr-row"><span class="mr-n">wazuh-manager</span><div class="btr"></div><span class="bdg ok" style="font-size:8.5px">RUNNING</span></div>
+        <div class="mr-row"><span class="mr-n">wazuh-indexer</span><div class="btr"></div><span class="bdg ok" style="font-size:8.5px">RUNNING</span></div>
+        <div class="mr-row"><span class="mr-n">wazuh-dashboard</span><div class="btr"></div><span class="bdg ok" style="font-size:8.5px">RUNNING</span></div>
+        <div class="mr-row"><span class="mr-n">Port 1514 (agents)</span><div class="btr"></div><span class="bdg ok" style="font-size:8.5px">OPEN</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="slbl">vm3 — nagios server (ubuntu 22.04 · 2 go ram)</div>
+  <div class="two">
+    <div>
+      <div class="mr-blk">
+        <div class="mr-hdr">Charge CPU</div>
+        <div class="mr-row"><span class="mr-n">Load 1 min</span><div class="btr"><div class="bf ok" style="width:3%"></div></div><span class="mr-v ok">3%</span></div>
+        <div class="mr-row"><span class="mr-n">Load 5 min</span><div class="btr"><div class="bf ok" style="width:2%"></div></div><span class="mr-v ok">2%</span></div>
+        <div class="mr-row"><span class="mr-n">Processus actifs</span><div class="btr"></div><span class="mr-v nt">108</span></div>
+        <div class="mr-row"><span class="mr-n">Utilisateurs actifs</span><div class="btr"></div><span class="mr-v nt">1</span></div>
+      </div>
+      <div class="mr-blk">
+        <div class="mr-hdr">Mémoire RAM</div>
+        <div class="mr-row"><span class="mr-n">RAM utilisée</span><div class="btr"><div class="bf ok" style="width:22%"></div></div><span class="mr-v ok">22%</span></div>
+        <div class="mr-row"><span class="mr-n">Swap libre</span><div class="btr"><div class="bf ok" style="width:96%"></div></div><span class="mr-v ok">96%</span></div>
+        <div class="mr-row"><span class="mr-n">Swap utilisé</span><div class="btr"><div class="bf ok" style="width:4%"></div></div><span class="mr-v ok">97 MB</span></div>
+        <div class="mr-row"><span class="mr-n">Total RAM</span><div class="btr"></div><span class="mr-v nt">2.0 Go</span></div>
+      </div>
+    </div>
+    <div>
+      <div class="mr-blk">
+        <div class="mr-hdr">Disque</div>
+        <div class="mr-row"><span class="mr-n">/ (root) utilisé</span><div class="btr"><div class="bf wr" style="width:70%"></div></div><span class="mr-v wr">70%</span></div>
+        <div class="mr-row"><span class="mr-n">Disponible</span><div class="btr"></div><span class="mr-v ok">5 602 MiB</span></div>
+        <div class="mr-row"><span class="mr-n">Inodes utilisés</span><div class="btr"><div class="bf ok" style="width:30%"></div></div><span class="mr-v ok">30%</span></div>
+        <div class="mr-row"><span class="mr-n">Filesystem</span><div class="btr"></div><span class="mr-v nt">ext4</span></div>
+      </div>
+      <div class="mr-blk">
+        <div class="mr-hdr">Services Nagios</div>
+        <div class="mr-row"><span class="mr-n">nagios.service</span><div class="btr"></div><span class="bdg ok" style="font-size:8.5px">RUNNING</span></div>
+        <div class="mr-row"><span class="mr-n">apache2.service</span><div class="btr"></div><span class="bdg ok" style="font-size:8.5px">RUNNING</span></div>
+        <div class="mr-row"><span class="mr-n">tailscaled.service</span><div class="btr"></div><span class="bdg ok" style="font-size:8.5px">RUNNING</span></div>
+        <div class="mr-row"><span class="mr-n">Port 80 (HTTP)</span><div class="btr"></div><span class="bdg ok" style="font-size:8.5px">OPEN</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="p-mitre" class="page">
+  <div class="ptitle">MITRE ATT&amp;CK — Techniques détectées</div>
+  <div class="psub">Scénarios simulés depuis Kali Linux (10.0.0.50) → Ubuntu Agent (10.0.0.30)</div>
+  <div class="kg" style="margin-top:14px">
+    <div class="kpi er"><div class="kl">Credential Access</div><div class="kv er">1 928</div><div class="ks">T1110, T1078</div></div>
+    <div class="kpi wr"><div class="kl">Lateral Movement</div><div class="kv wr">1 389</div><div class="ks">T1021.004 SSH</div></div>
+    <div class="kpi wr"><div class="kl">Defense Evasion</div><div class="kv wr">828</div><div class="ks">T1112, T1070</div></div>
+    <div class="kpi in"><div class="kl">Privilege Escalation</div><div class="kv in">306</div><div class="ks">T1548.003</div></div>
+    <div class="kpi nt"><div class="kl">Impact</div><div class="kv nt">298</div><div class="ks">T1565.001</div></div>
+    <div class="kpi nt"><div class="kl">Persistence</div><div class="kv nt">256</div><div class="ks">T1136</div></div>
+  </div>
+  <div class="slbl">techniques par nombre d'alertes</div>
+  <div class="mg">
+    <div class="mc hr"><div class="mi">T1110.001</div><div class="mn2">Password Guessing</div><div class="mt">Credential Access · Hydra SSH</div><div class="mv">1 544</div><div class="ms">alertes générées</div></div>
+    <div class="mc hr"><div class="mi">T1021.004</div><div class="mn2">Remote Services SSH</div><div class="mt">Lateral Movement</div><div class="mv">1 389</div><div class="ms">alertes générées</div></div>
+    <div class="mc hr"><div class="mi">T1110</div><div class="mn2">Brute Force</div><div class="mt">Credential Access · générique</div><div class="mv">384</div><div class="ms">alertes générées</div></div>
+    <div class="mc ha"><div class="mi">T1112</div><div class="mn2">Modify Registry</div><div class="mt">Defense Evasion · Windows</div><div class="mv">314</div><div class="ms">alertes générées</div></div>
+    <div class="mc ha"><div class="mi">T1078</div><div class="mn2">Valid Accounts</div><div class="mt">Initial Access · root SSH</div><div class="mv">252</div><div class="ms">alertes générées</div></div>
+    <div class="mc ha"><div class="mi">T1565.001</div><div class="mn2">Stored Data Manipulation</div><div class="mt">Impact · chmod /etc/passwd</div><div class="mv">251</div><div class="ms">alertes générées</div></div>
+    <div class="mc hg"><div class="mi">T1548.003</div><div class="mn2">Sudo and Sudo Caching</div><div class="mt">Privilege Escalation</div><div class="mv">36</div><div class="ms">alertes générées</div></div>
+    <div class="mc hg"><div class="mi">T1136</div><div class="mn2">Create Account</div><div class="mt">Persistence · adduser hackertest</div><div class="mv">2</div><div class="ms">alertes générées</div></div>
+  </div>
+  <div class="slbl">chronologie des attaques simulées</div>
+  <div class="fd">
+    <div class="fi er"><div class="fd-dot"></div><div class="fb"><div class="ft">Attaque 1 — Brute Force SSH via Hydra · T1110.001</div><div class="fm">hydra -l <utilisateur> -P rockyou.txt ssh://10.0.0.30 · 1 544 tentatives</div></div><div class="ftime">18:00</div></div>
+    <div class="fi wr"><div class="fd-dot"></div><div class="fb"><div class="ft">Attaque 2 — Scan Nmap SYN · T1046</div><div class="fm">sudo nmap -sS -p 1-1000 10.0.0.30 · ports 22/80/111 ouverts</div></div><div class="ftime">14:03</div></div>
+    <div class="fi wr"><div class="fd-dot"></div><div class="fb"><div class="ft">Attaque 3 — Élévation de privilèges sudo · T1548.003</div><div class="fm">sudo su → root · cat /etc/shadow · chmod 777 /etc/passwd</div></div><div class="ftime">23:55</div></div>
+    <div class="fi in"><div class="fd-dot"></div><div class="fb"><div class="ft">Attaque 4 — Création compte suspect · T1136</div><div class="fm">sudo adduser hackertest · 2 alertes Persistence</div></div><div class="ftime">23:55</div></div>
+    <div class="fi in"><div class="fd-dot"></div><div class="fb"><div class="ft">Attaque 5 — Connexion root SSH · T1078</div><div class="fm">ssh root@10.0.0.30 · Permission denied ×3 · 164 événements</div></div><div class="ftime">00:10</div></div>
+  </div>
+</div>
+
+<div id="p-alerts" class="page">
+  <div class="ptitle">Alertes & Incidents — Journal de sécurité</div>
+  <div class="psub">Logs consolidés Wazuh + Nagios · 24 dernières heures</div>
+  <div class="kg" style="margin-top:14px">
+    <div class="kpi ok"><div class="kl">Incidents clos</div><div class="kv ok">5</div><div class="ks">scénarios validés</div></div>
+    <div class="kpi wr"><div class="kl">En analyse L2</div><div class="kv wr">2</div><div class="ks">corrélation en cours</div></div>
+    <div class="kpi ok"><div class="kl">Active Response</div><div class="kv ok">OK</div><div class="ks">IP bloquées auto</div></div>
+    <div class="kpi ok"><div class="kl">Faux positifs</div><div class="kv ok">&lt;5%</div><div class="ks">seuil acceptable</div></div>
+  </div>
+  <div class="slbl">journal consolidé</div>
+  <div class="fd">
+    <div class="fi er"><div class="fd-dot"></div><div class="fb"><div class="ft">[WAZUH] SSH brute force detected — rule 100001 · Level 10</div><div class="fm">ubuntu-agent · T1110.001 · 1 544 occ. · Active Response déclenché</div></div><div class="ftime">00:10:09</div></div>
+    <div class="fi wr"><div class="fd-dot"></div><div class="fb"><div class="ft">[WAZUH] New user added — hackertest · rule 5902 · Level 8</div><div class="fm">ubuntu-agent · T1136 · Persistence · useradd dans auth.log</div></div><div class="ftime">23:55:21</div></div>
+    <div class="fi wr"><div class="fd-dot"></div><div class="fb"><div class="ft">[WAZUH] Information from user was changed · rule 5904 · Level 8</div><div class="fm">ubuntu-agent · T1098 · Persistence · modification groupe</div></div><div class="ftime">23:56:46</div></div>
+    <div class="fi wr"><div class="fd-dot"></div><div class="fb"><div class="ft">[WAZUH] Successful sudo to ROOT · rule 5402 · Level 3</div><div class="fm">ubuntu-agent · T1548.003 · Privilege Escalation</div></div><div class="ftime">23:55:20</div></div>
+    <div class="fi in"><div class="fd-dot"></div><div class="fb"><div class="ft">[WAZUH] Integrity checksum changed — /etc/passwd · rule 550 · Level 7</div><div class="fm">ubuntu-agent · T1565.001 · Impact · chmod 777 détecté FIM</div></div><div class="ftime">23:55:20</div></div>
+    <div class="fi er"><div class="fd-dot"></div><div class="fb"><div class="ft">[NAGIOS] SERVICE CRITICAL — SSH on localhost · connect refused</div><div class="fm">localhost:22 · check_tcp · non critique pour le lab</div></div><div class="ftime">01:03:40</div></div>
+    <div class="fi ok"><div class="fd-dot"></div><div class="fb"><div class="ft">[NAGIOS] SERVICE RECOVERY — Wazuh Port 1514 · TCP OK</div><div class="fm">wazuh-manager:1514 · port ouvert · service opérationnel</div></div><div class="ftime">00:58:40</div></div>
+    <div class="fi ok"><div class="fd-dot"></div><div class="fb"><div class="ft">[WAZUH] Windows Logon Success — Windows11-Khadija · rule 60106</div><div class="fm">T1078 · Defense Evasion · connexion légitime administratrice</div></div><div class="ftime">00:01:52</div></div>
+  </div>
+</div>
+
+<div id="p-notif" class="page">
+  <div class="ptitle">Notifications — Configuration des alertes</div>
+  <div class="psub">Email · Push mobile Ntfy · SMS Twilio · Telegram Bot</div>
+  <div class="two" style="margin-top:14px">
+    <div class="card">
+      <div class="card-t">Alertes email — Nagios</div>
+      <div class="ib b">Config dans <strong>/usr/local/nagios/etc/objects/contacts.cfg</strong>. Installer mailutils pour l'envoi SMTP.</div>
+      <div class="form-r"><label class="form-l">Email destinataire</label><input class="fi2" type="email" value="analyste@example.com"></div>
+      <div class="form-r"><label class="form-l">Niveau minimum</label><select class="sel"><option>CRITICAL uniquement</option><option selected>WARNING + CRITICAL</option><option>Tous les états</option></select></div>
+      <div class="tg-r"><div><div class="tg-i">Hôte DOWN / UP</div><div class="tg-s">Alerte si VM inaccessible</div></div><label class="sw"><input type="checkbox" checked><span class="swt"></span></label></div>
+      <div class="tg-r"><div><div class="tg-i">Service CRITICAL</div><div class="tg-s">Wazuh, API, ports TCP</div></div><label class="sw"><input type="checkbox" checked><span class="swt"></span></label></div>
+      <div class="tg-r"><div><div class="tg-i">Brute force SSH</div><div class="tg-s">Règles Wazuh niveau ≥ 10</div></div><label class="sw"><input type="checkbox" checked><span class="swt"></span></label></div>
+      <button class="btn btn-p" style="width:100%;justify-content:center;margin-top:12px" onclick="toast('Config email sauvegardée')">Sauvegarder</button>
+    </div>
+    <div class="card">
+      <div class="card-t">Push mobile — Ntfy (gratuit)</div>
+      <div class="ib g">Ntfy envoie des notifications push instantanées sur Android/iOS sans compte. Installez l'app et abonnez-vous au topic.</div>
+      <div class="form-r"><label class="form-l">Topic Ntfy</label><input class="fi2" type="text" value="soc-emsi-2026" id="ntopic"></div>
+      <div class="code"><span class="cc"># Test depuis VM Nagios</span>
+curl -d "HOST DOWN: wazuh-manager" \
+  -H "Title: SOC Alert" \
+  -H "Priority: urgent" \
+  ntfy.sh/soc-emsi-2026</div>
+      <button class="btn btn-g" style="width:100%;justify-content:center;margin-top:8px" onclick="sendNtfy()">Envoyer notification test</button>
+    </div>
+    <div class="card">
+      <div class="card-t">Commandes Nagios — commands.cfg</div>
+      <div class="code"><span class="cc"># Notification HOST via Ntfy</span>
+define command {
+  command_name notify-host-ntfy
+  command_line curl -d \
+    "[$HOSTSTATE$] $HOSTALIAS$" \
+    ntfy.sh/soc-emsi-2026
+}
+<span class="cc"># Notification SERVICE via Ntfy</span>
+define command {
+  command_name notify-service-ntfy
+  command_line curl -d \
+    "[$SERVICESTATE$] $SERVICEDESC$" \
+    ntfy.sh/soc-emsi-2026
+}</div>
+    </div>
+    <div class="card">
+      <div class="card-t">Telegram Bot</div>
+      <div class="form-r"><label class="form-l">Bot Token (via @BotFather)</label><input class="fi2" type="password" placeholder="1234567890:AAEXAMPLE..."></div>
+      <div class="form-r"><label class="form-l">Chat ID</label><input class="fi2" type="text" placeholder="-100123456789"></div>
+      <div class="code"><span class="cc"># Envoyer une alerte Telegram</span>
+curl -s -X POST \
+  https://api.telegram.org/bot{TOKEN}/sendMessage \
+  -d chat_id={CHAT_ID} \
+  -d text="CRITICAL: HOST DOWN"</div>
+    </div>
+  </div>
+</div>
+
+<div id="p-mobile" class="page">
+  <div class="ptitle">Accès mobile — Déploiement</div>
+  <div class="psub">Ce dashboard est mobile-first — fonctionne sur tout navigateur téléphone via Tailscale</div>
+  <div class="two" style="margin-top:14px">
+    <div class="card">
+      <div class="card-t">Déployer sur la VM Nagios</div>
+      <div class="code"><span class="cc"># Copier le dashboard sur Nagios</span>
+sudo cp soc_dashboard.html \
+  /usr/local/nagios/share/soc.html
+
+<span class="cc"># URL d'accès mobile</span>
+http://10.0.0.20/nagios/soc.html</div>
+      <button class="btn btn-p" style="width:100%;justify-content:center;margin-top:10px" onclick="toast('URL : http://10.0.0.20/nagios/soc.html')">Copier l'URL</button>
+    </div>
+    <div class="card">
+      <div class="card-t">Ajouter à l'écran d'accueil (PWA)</div>
+      <div style="font-size:11px;color:#4d7060;line-height:1.8">
+        <strong style="color:#8ab8a0">iPhone / Safari :</strong><br>
+        Partager → "Sur l'écran d'accueil"<br><br>
+        <strong style="color:#8ab8a0">Android / Chrome :</strong><br>
+        Menu (⋮) → "Ajouter à l'écran d'accueil"<br><br>
+        <strong style="color:#8ab8a0">Résultat :</strong><br>
+        <span style="color:#2a4035">Icône SOC Platform sur votre bureau, plein écran, navigation bottom-bar, accès Wazuh et Nagios en un tap.</span>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-t">Tailscale sur téléphone</div>
+      <div style="font-size:11px;color:#4d7060;line-height:1.9">
+        <strong style="color:#8ab8a0">1.</strong> Installez Tailscale (Android / iOS)<br>
+        <strong style="color:#8ab8a0">2.</strong> Connectez-vous :<br>
+        <span style="font-family:var(--font-mono);font-size:9px;color:#00c87a">analyste@example.com</span><br>
+        <strong style="color:#8ab8a0">3.</strong> Ouvrez dans le navigateur :<br>
+        <span style="font-family:var(--font-mono);font-size:9px;color:#4a9eff">http://10.0.0.20/nagios/soc.html</span>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-t">Notifications push — Ntfy</div>
+      <div style="font-size:11px;color:#4d7060;line-height:1.9">
+        <strong style="color:#8ab8a0">1.</strong> Téléchargez l'app <strong style="color:#c8ddd2">Ntfy</strong> (gratuite)<br>
+        <strong style="color:#8ab8a0">2.</strong> Abonnez-vous au topic :<br>
+        <span style="font-family:var(--font-mono);font-size:9px;color:#00c87a">ntfy.sh/soc-emsi-2026</span><br>
+        <strong style="color:#8ab8a0">3.</strong> Vous recevrez instantanément :<br>
+        <span style="color:#2a4035">— HOST DOWN Nagios<br>
+        — Alertes Wazuh niveau ≥ 10<br>
+        — Service CRITICAL</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div>
+</div>
+</div>
+
+<div id="t" class="toast"></div>
+
+<script>
+function go(id,el){
+  document.querySelectorAll('.page').forEach(p=>p.style.display='none');
+  document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
+  const pg=document.getElementById('p-'+id);
+  if(pg){pg.style.display='block';}
+  if(el)el.classList.add('active');
+}
+document.querySelectorAll('.page').forEach((p,i)=>{if(i>0)p.style.display='none';});
+
+function openUrl(url){toast('Ouverture : '+url); try{window.open(url,'_blank');}catch(e){}}
+function toast(msg){const t=document.getElementById('t');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2800);}
+function sendNtfy(){
+  const topic=document.getElementById('ntopic').value||'soc-emsi-2026';
+  fetch('https://ntfy.sh/'+topic,{method:'POST',body:'[SOC EMSI] Test — Dashboard operationnel',headers:{'Title':'SOC Alert','Priority':'3'}}).catch(()=>{});
+  toast('Notification test envoyée sur ntfy.sh/'+topic);
+}
+setInterval(()=>{document.getElementById('clk').textContent=new Date().toLocaleTimeString('fr-FR');},1000);
+const ft1=document.getElementById('ft1');
+if(ft1){const t=new Date();t.setMinutes(t.getMinutes()-1);ft1.textContent=t.toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'});}
+</script>
